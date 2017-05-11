@@ -7,9 +7,9 @@ import info.izumin.android.droidux.example.todoswithdagger.action.ClearCompleted
 import info.izumin.android.droidux.example.todoswithdagger.action.ClearNewTodoTextAction;
 import info.izumin.android.droidux.example.todoswithdagger.action.DeleteTodoAction;
 import info.izumin.android.droidux.example.todoswithdagger.action.ToggleCompletedTodoAction;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.subjects.PublishSubject;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.subjects.PublishSubject;
 
 /**
  * Created by izumin on 11/5/15.
@@ -24,7 +24,7 @@ public class MainPresenter {
     private final PublishSubject<Long> clickItemSubject = PublishSubject.create();
     private final PublishSubject<Long> longClickItemSubject = PublishSubject.create();
 
-    private CompositeSubscription subscriptions;
+    private CompositeDisposable subscriptions;
 
     public MainPresenter(MainView view, RootStore store) {
         this.view = view;
@@ -32,7 +32,7 @@ public class MainPresenter {
     }
 
     void onStart() {
-        subscriptions = new CompositeSubscription();
+        subscriptions = new CompositeDisposable();
 
         subscriptions.add(clickAddTodoSubject
                 .filter(s -> !s.isEmpty())
@@ -57,7 +57,7 @@ public class MainPresenter {
     }
 
     void onStop() {
-        subscriptions.unsubscribe();
+        subscriptions.dispose();
     }
 
     void onClickBtnAddTodo(String text) {

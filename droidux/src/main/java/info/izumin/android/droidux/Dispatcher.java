@@ -4,9 +4,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
 
-import rx.Observable;
-import rx.functions.Action1;
-import rx.functions.Func1;
+import io.reactivex.Observable;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 
 /**
  * Created by izumin on 11/28/15.
@@ -24,23 +25,23 @@ public class Dispatcher {
 
     public Observable<Action> dispatch(Action action) {
         return Observable.just(action)
-                .flatMap(new Func1<Action, Observable<Action>>() {
+                .flatMap(new Function<Action, Observable<Action>>() {
                     @Override
-                    public Observable<Action> call(Action action) {
+                    public Observable<Action> apply(@NonNull Action action) throws Exception {
                         return applyMiddlewaresBeforeDispatch(action);
                     }
                 })
-                .doOnNext(new Action1<Action>() {
+                .doOnNext(new Consumer<Action>() {
                     @Override
-                    public void call(Action action) {
+                    public void accept(@NonNull Action action) throws Exception {
                         for (StoreImpl store : storeImpls) {
                             store.dispatch(action);
                         }
                     }
                 })
-                .flatMap(new Func1<Action, Observable<Action>>() {
+                .flatMap(new Function<Action, Observable<Action>>() {
                     @Override
-                    public Observable<Action> call(Action action) {
+                    public Observable<Action> apply(@NonNull Action action) throws Exception {
                         return applyMiddlewaresAfterDispatch(action);
                     }
                 });
@@ -50,9 +51,9 @@ public class Dispatcher {
         Observable<Action> o = Observable.just(action);
 
         for (final Middleware<?> mw : middlewares) {
-            o = o.flatMap(new Func1<Action, Observable<Action>>() {
+            o = o.flatMap(new Function<Action, Observable<Action>>() {
                 @Override
-                public Observable<Action> call(Action a) {
+                public Observable<Action> apply(@NonNull Action a) throws Exception {
                     return mw.beforeDispatch(a);
                 }
             });
@@ -65,9 +66,9 @@ public class Dispatcher {
         ListIterator<Middleware> iterator = middlewares.listIterator(middlewares.size());
         while(iterator.hasPrevious()) {
             final Middleware<?> mw = iterator.previous();
-            o = o.flatMap(new Func1<Action, Observable<Action>>() {
+            o = o.flatMap(new Function<Action, Observable<Action>>() {
                 @Override
-                public Observable<Action> call(Action a) {
+                public Observable<Action> apply(Action a) {
                     return mw.afterDispatch(a);
                 }
             });

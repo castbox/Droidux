@@ -11,9 +11,9 @@ import info.izumin.android.droidux.example.todomvc.action.AddTodoAction;
 import info.izumin.android.droidux.example.todomvc.action.ClearCompletedTodoAction;
 import info.izumin.android.droidux.example.todomvc.action.DeleteTodoAction;
 import info.izumin.android.droidux.example.todomvc.action.ToggleCompletedTodoAction;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.subjects.PublishSubject;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.subjects.PublishSubject;
 
 /**
  * Created by izumin on 11/5/15.
@@ -73,7 +73,7 @@ public class MainActivityHelper {
     }
 
     private Observable<String> observeOnClickBtnAddTodo() {
-        PublishSubject<String>  subject= PublishSubject.create();
+        PublishSubject<String> subject= PublishSubject.create();
         btnAddTodo.setOnClickListener(v -> subject.onNext(editNewTodo.getText().toString()));
         return subject;
     }

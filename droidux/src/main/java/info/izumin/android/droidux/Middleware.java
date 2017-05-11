@@ -1,6 +1,6 @@
 package info.izumin.android.droidux;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * Created by izumin on 11/2/15.

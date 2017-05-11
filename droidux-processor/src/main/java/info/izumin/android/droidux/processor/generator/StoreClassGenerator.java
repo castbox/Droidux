@@ -26,7 +26,7 @@ import info.izumin.android.droidux.processor.model.DispatcherModel;
 import info.izumin.android.droidux.processor.model.StoreImplModel;
 import info.izumin.android.droidux.processor.model.StoreMethodModel;
 import info.izumin.android.droidux.processor.model.StoreModel;
-import rx.Observable;
+import io.reactivex.Observable;
 
 import static info.izumin.android.droidux.processor.util.PoetUtils.getOverrideAnnotation;
 import static info.izumin.android.droidux.processor.util.PoetUtils.getParameterSpec;

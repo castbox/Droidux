@@ -3,8 +3,8 @@ package info.izumin.android.droidux;
 import java.util.HashSet;
 import java.util.Set;
 
-import rx.Observable;
-import rx.subjects.BehaviorSubject;
+import io.reactivex.Observable;
+import io.reactivex.subjects.BehaviorSubject;
 
 /**
  * Created by izumin on 11/2/15.

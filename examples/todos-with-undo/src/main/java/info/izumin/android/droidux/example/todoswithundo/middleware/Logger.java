@@ -5,7 +5,7 @@ import android.util.Log;
 import info.izumin.android.droidux.Action;
 import info.izumin.android.droidux.Middleware;
 import info.izumin.android.droidux.example.todoswithundo.RootStore;
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * Created by izumin on 11/4/15.

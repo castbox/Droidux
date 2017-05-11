@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 
 android {
@@ -29,13 +28,14 @@ android {
     dataBinding {
         enabled = true
     }
+    buildToolsVersion '25.0.2'
 }
 
 dependencies {
-    compile "io.reactivex:rxjava:${project.rxJavaVersion}"
-    compile "io.reactivex:rxandroid:${project.rxAndroidVersion}"
+    compile "io.reactivex.rxjava2:rxjava:${project.rxJava2Version}"
+    compile "io.reactivex.rxjava2:rxandroid:${project.rxAndroid2Version}"
     compile project(':droidux')
-    apt project(':droidux-processor')
+    annotationProcessor project(':droidux-processor')
     compile project(':middlewares:droidux-thunk')
     compile "com.android.support:appcompat-v7:${project.supportLibrariesVersion}"
     compile "com.android.support:design:${project.supportLibrariesVersion}"
