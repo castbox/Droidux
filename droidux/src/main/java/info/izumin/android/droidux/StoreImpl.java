@@ -20,7 +20,7 @@ public abstract class StoreImpl<T, R> {
     protected StoreImpl(T state, R reducer) {
         this.state = state;
         this.reducer = reducer;
-        subject = BehaviorSubject.create();
+        subject = BehaviorSubject.createDefault(state);
         listeners = new HashSet<>();
     }
 
