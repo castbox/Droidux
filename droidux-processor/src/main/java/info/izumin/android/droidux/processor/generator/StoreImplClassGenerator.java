@@ -64,6 +64,7 @@ public class StoreImplClassGenerator {
     private MethodSpec createMethodSpec() {
         return MethodSpec.methodBuilder(StoreImplModel.DISPATCH_METHOD_NAME)
                 .addAnnotation(getOverrideAnnotation())
+                .addModifiers(Modifier.SYNCHRONIZED)
                 .addModifiers(Modifier.PROTECTED)
                 .returns(TypeName.VOID)
                 .addParameter(getParameterSpec(Action.class))
